@@ -61,6 +61,12 @@ namespace TruthTreesGUI
                 drawLines(p);
             }
             this.Controls.Add(txtDown);
+
+            //create corresponding checkbox
+            CheckBox chkDown = new CheckBox();
+            chkDown.Location = new System.Drawing.Point(down.x + 60, down.y);
+            this.Controls.Add(chkDown);
+            down.cb = chkDown;
         }
 
         private void branchButton_Click(object sender, EventArgs e)
@@ -94,6 +100,16 @@ namespace TruthTreesGUI
                 parent.drawLines();
                 drawLines(p);
             }
+
+            //create corresponding checkboxes
+            CheckBox chkRight = new CheckBox();
+            CheckBox chkLeft = new CheckBox();
+            chkRight.Location = new System.Drawing.Point(right.x + 60, right.y);
+            chkLeft.Location = new System.Drawing.Point(left.x + 60, left.y);
+            this.Controls.Add(chkRight);
+            this.Controls.Add(chkLeft);
+            left.cb = chkLeft;
+            right.cb = chkRight;
         }
 
         private void drawLines(TTNode current)
