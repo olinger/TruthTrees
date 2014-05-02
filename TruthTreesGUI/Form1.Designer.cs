@@ -36,7 +36,8 @@
             this.not = new System.Windows.Forms.Button();
             this.cond = new System.Windows.Forms.Button();
             this.bicond = new System.Windows.Forms.Button();
-            this.closeButton = new System.Windows.Forms.Button();
+            this.closedButton = new System.Windows.Forms.Button();
+            this.openButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // levelButton
@@ -67,10 +68,11 @@
             this.verifyButton.TabIndex = 3;
             this.verifyButton.Text = "Verify";
             this.verifyButton.UseVisualStyleBackColor = true;
+            this.verifyButton.Click += new System.EventHandler(this.verifyButton_Click);
             // 
             // and
             // 
-            this.and.Location = new System.Drawing.Point(526, 169);
+            this.and.Location = new System.Drawing.Point(525, 192);
             this.and.Name = "and";
             this.and.Size = new System.Drawing.Size(32, 32);
             this.and.TabIndex = 4;
@@ -80,7 +82,7 @@
             // 
             // or
             // 
-            this.or.Location = new System.Drawing.Point(564, 169);
+            this.or.Location = new System.Drawing.Point(563, 192);
             this.or.Name = "or";
             this.or.Size = new System.Drawing.Size(32, 32);
             this.or.TabIndex = 5;
@@ -91,7 +93,7 @@
             // not
             // 
             this.not.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.not.Location = new System.Drawing.Point(602, 169);
+            this.not.Location = new System.Drawing.Point(601, 192);
             this.not.Name = "not";
             this.not.Size = new System.Drawing.Size(32, 32);
             this.not.TabIndex = 6;
@@ -101,7 +103,7 @@
             // 
             // cond
             // 
-            this.cond.Location = new System.Drawing.Point(548, 207);
+            this.cond.Location = new System.Drawing.Point(547, 230);
             this.cond.Name = "cond";
             this.cond.Size = new System.Drawing.Size(32, 32);
             this.cond.TabIndex = 7;
@@ -112,7 +114,7 @@
             // bicond
             // 
             this.bicond.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bicond.Location = new System.Drawing.Point(586, 207);
+            this.bicond.Location = new System.Drawing.Point(585, 230);
             this.bicond.Name = "bicond";
             this.bicond.Size = new System.Drawing.Size(32, 32);
             this.bicond.TabIndex = 8;
@@ -120,14 +122,25 @@
             this.bicond.UseVisualStyleBackColor = true;
             this.bicond.Click += new System.EventHandler(this.bicond_Click);
             // 
-            // closeButton
+            // closedButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(546, 127);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(68, 25);
-            this.closeButton.TabIndex = 9;
-            this.closeButton.Text = "Close";
-            this.closeButton.UseVisualStyleBackColor = true;
+            this.closedButton.Location = new System.Drawing.Point(546, 127);
+            this.closedButton.Name = "closedButton";
+            this.closedButton.Size = new System.Drawing.Size(68, 25);
+            this.closedButton.TabIndex = 9;
+            this.closedButton.Text = "Closed";
+            this.closedButton.UseVisualStyleBackColor = true;
+            this.closedButton.Click += new System.EventHandler(this.closedButton_Click);
+            // 
+            // openButton
+            // 
+            this.openButton.Location = new System.Drawing.Point(546, 158);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(68, 25);
+            this.openButton.TabIndex = 10;
+            this.openButton.Text = "Open";
+            this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // Form1
             // 
@@ -136,7 +149,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(674, 507);
-            this.Controls.Add(this.closeButton);
+            this.Controls.Add(this.openButton);
+            this.Controls.Add(this.closedButton);
             this.Controls.Add(this.bicond);
             this.Controls.Add(this.cond);
             this.Controls.Add(this.not);
@@ -164,7 +178,8 @@
         private System.Windows.Forms.Button not;
         private System.Windows.Forms.Button cond;
         private System.Windows.Forms.Button bicond;
-        private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button closedButton;
+        private System.Windows.Forms.Button openButton;
     }
 }
 

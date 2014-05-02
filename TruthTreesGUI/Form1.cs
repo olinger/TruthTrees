@@ -17,7 +17,7 @@ namespace TruthTreesGUI
         public TextBox focusedTextbox = null;
         public bool clicked = false;
         private bool specialKeyPressed = false;
-
+        public int checkOffCount = 0;
         public Form1()
         {
             InitializeComponent(); 
@@ -46,6 +46,8 @@ namespace TruthTreesGUI
 
         private void levelButton_Click(object sender, EventArgs e)
         {
+            if (clicked && focusedTextbox == null)
+                return;
             TextBox txtDown = new TextBox();
             txtDown.Name = "txtDown";
             txtDown.Size = new System.Drawing.Size(50, 25);
@@ -55,8 +57,8 @@ namespace TruthTreesGUI
             TTNode down = new TTNode(txtDown);
             if (!clicked)
             {
-                down.x = 220;
-                down.y = 70;
+                down.x = 230;
+                down.y = 50;
                 parent = down;
                 clicked = true;
                 txtDown.Location = new System.Drawing.Point(parent.x, parent.y);
@@ -76,14 +78,19 @@ namespace TruthTreesGUI
 
             //create corresponding checkbox
             CheckBox chkDown = new CheckBox();
-            chkDown.Location = new System.Drawing.Point(down.x + 60, down.y);
+            chkDown.Location = new System.Drawing.Point(down.x + 60, down.y+3);
             chkDown.Tag = down;
+            chkDown.Size = new System.Drawing.Size(15, 15);
             this.Controls.Add(chkDown);
             down.cb = chkDown;
+
+            focusedTextbox = txtDown;
         }
 
         private void branchButton_Click(object sender, EventArgs e)
         {
+            if (focusedTextbox == null)
+                return;
             TextBox txtRight = new TextBox();
             TextBox txtLeft = new TextBox();
             txtLeft.Name = "txtLeft";
@@ -119,14 +126,19 @@ namespace TruthTreesGUI
             //create corresponding checkboxes
             CheckBox chkRight = new CheckBox();
             CheckBox chkLeft = new CheckBox();
-            chkRight.Location = new System.Drawing.Point(right.x + 60, right.y);
-            chkLeft.Location = new System.Drawing.Point(left.x + 60, left.y);
+            chkRight.Location = new System.Drawing.Point(right.x + 60, right.y+3);
+            chkLeft.Location = new System.Drawing.Point(left.x + 60, left.y+3);
+            chkLeft.Size = new System.Drawing.Size(10, 10);
             chkRight.Tag = right;
             chkLeft.Tag = left;
+            chkRight.Size = new System.Drawing.Size(15, 15);
+            chkLeft.Size = new System.Drawing.Size(15, 15);
             this.Controls.Add(chkRight);
             this.Controls.Add(chkLeft);
             left.cb = chkLeft;
             right.cb = chkRight;
+
+            focusedTextbox = txtRight;
         }
 
         private void drawLines(TTNode current)
@@ -221,11 +233,62 @@ namespace TruthTreesGUI
                 specialKeyPressed = true;
                 branchButton_Click(sender, e);
             }
-            if (e.KeyCode == Keys.L && e.Control)
+            if (e.KeyCode == Keys.A && e.Control)
             {
                 specialKeyPressed = true;
                 levelButton_Click(sender, e);
             }
+            if (e.KeyCode == Keys.X && e.Control)
+            {
+                specialKeyPressed = true;
+                closedButton_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.O && e.Control)
+            {
+                specialKeyPressed = true;
+                openButton_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.V && e.Control)
+            {
+                specialKeyPressed = true;
+                verifyButton_Click(sender, e);
+            }
+        }
+
+        private void verifyButton_Click(object sender, EventArgs e)
+        {
+            checkOffCount++;
+            Label verifyBranch = new Label();
+            verifyBranch.Text = "✓" + checkOffCount;
+            verifyBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 75, focusedTextbox.Location.Y);
+            verifyBranch.ForeColor = Color.Green;
+            Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
+            verifyBranch.Font = font;
+            this.Controls.Add(verifyBranch);
+        }
+
+        private void closedButton_Click(object sender, EventArgs e)
+        {
+            checkOffCount++;
+            Label closedBranch = new Label();
+            closedBranch.Text = "X"+checkOffCount;
+            closedBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 15, focusedTextbox.Location.Y + 25);
+            closedBranch.ForeColor = Color.Red;
+            Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
+            closedBranch.Font = font;
+            this.Controls.Add(closedBranch);
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            checkOffCount++;
+            Label openBranch = new Label();
+            openBranch.Text = "O" + checkOffCount;
+            openBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 15, focusedTextbox.Location.Y + 25);
+            openBranch.ForeColor = Color.Orange;
+            Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
+            openBranch.Font = font;
+            this.Controls.Add(openBranch);
         }
 
     }
