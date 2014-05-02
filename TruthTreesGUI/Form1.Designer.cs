@@ -28,17 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.levelButton = new System.Windows.Forms.Button();
             this.branchButton = new System.Windows.Forms.Button();
             this.verifyButton = new System.Windows.Forms.Button();
             this.premiseButton = new System.Windows.Forms.Button();
             this.goalButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // levelButton
             // 
@@ -101,13 +96,13 @@
             this.Controls.Add(this.levelButton);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button levelButton;
         private System.Windows.Forms.Button branchButton;
         private System.Windows.Forms.Button verifyButton;

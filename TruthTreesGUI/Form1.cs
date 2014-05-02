@@ -12,40 +12,93 @@ namespace TruthTreesGUI
 {
     public partial class Form1 : Form
     {
+        public TTNode parent;
+        public TextBox focusedTextbox = null;
+        public bool clicked = false;
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            foreach(TextBox tb in this.Controls.OfType<TextBox>())
+            {
+                tb.GotFocus += textBox_Enter;
+            }
         }
 
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void textBox_Enter(object sender, EventArgs e)
         {
-
+            focusedTextbox = (TextBox)sender;
         }
+
         int c = 0;
+        Point location = new Point(0, 0);
+
         private void levelButton_Click(object sender, EventArgs e)
         {
-            int cY = 50 + 30 * c;
-            TextBox txtRun = new TextBox();
-            txtRun.Name = "txtDynamic" + c++;
-            txtRun.Location = new System.Drawing.Point(150, cY);
-            txtRun.Size = new System.Drawing.Size(50, 25);
-            this.Controls.Add(txtRun);
+            TextBox txtDown = new TextBox();
+            txtDown.Name = "txtDown";
+            txtDown.Size = new System.Drawing.Size(50, 25);
+            txtDown.GotFocus += textBox_Enter;
+            txtDown.Tag = "C";
+            TTNode down = new TTNode(txtDown);
+            if (!clicked)
+            {
+                down.x = 220;
+                down.y = 70;
+                parent = down;
+                clicked = true;
+                txtDown.Location = new System.Drawing.Point(parent.x, parent.y);
+            }
+            if (focusedTextbox != null)
+            {
+                TTNode p = parent.find(focusedTextbox);
 
+                down.parent = p;
+                p.addChild(down);
+                parent.reposition();
+                txtDown.Location = new System.Drawing.Point(down.x, down.y);
+            }
+            this.Controls.Add(txtDown);
         }
+
         private void branchButton_Click(object sender, EventArgs e)
         {
-            int cY = 50 + 30 * c;
-            c++;
             TextBox txtRight = new TextBox();
             TextBox txtLeft = new TextBox();
-            txtLeft.Name = "txtLeft" + c;
-            txtRight.Name = "txtRight" + c;
-            txtRight.Location = new System.Drawing.Point(120, cY);
+            txtLeft.Name = "txtLeft";
+            txtRight.Name = "txtRight";
             txtRight.Size = new System.Drawing.Size(50, 25);
-            txtLeft.Location = new System.Drawing.Point(175, cY);
             txtLeft.Size = new System.Drawing.Size(50, 25);
+            txtRight.GotFocus += textBox_Enter;
+            txtLeft.GotFocus += textBox_Enter;
+            txtRight.Tag = "R";
+            txtLeft.Tag = "L";
             this.Controls.Add(txtRight);
             this.Controls.Add(txtLeft);
+
+            TTNode left = new TTNode(txtLeft);
+            TTNode right = new TTNode(txtRight);
+
+            if (focusedTextbox != null)
+            {
+                TTNode p = parent.find(focusedTextbox);
+                left.parent = p;
+                right.parent = p;
+                p.addChild(left);
+                p.addChild(right);
+                p.reposition();
+                txtRight.Location = new System.Drawing.Point(right.x, right.y);
+                txtLeft.Location = new System.Drawing.Point(left.x, left.y);
+            }
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void lineShape1_Click(object sender, EventArgs e)
+        {
+        }
+
     }
 }
