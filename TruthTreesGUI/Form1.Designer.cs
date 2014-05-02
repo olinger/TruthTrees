@@ -31,8 +31,12 @@
             this.levelButton = new System.Windows.Forms.Button();
             this.branchButton = new System.Windows.Forms.Button();
             this.verifyButton = new System.Windows.Forms.Button();
-            this.premiseButton = new System.Windows.Forms.Button();
-            this.goalButton = new System.Windows.Forms.Button();
+            this.and = new System.Windows.Forms.Button();
+            this.or = new System.Windows.Forms.Button();
+            this.not = new System.Windows.Forms.Button();
+            this.cond = new System.Windows.Forms.Button();
+            this.bicond = new System.Windows.Forms.Button();
+            this.closeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // levelButton
@@ -64,23 +68,66 @@
             this.verifyButton.Text = "Verify";
             this.verifyButton.UseVisualStyleBackColor = true;
             // 
-            // premiseButton
+            // and
             // 
-            this.premiseButton.Location = new System.Drawing.Point(546, 127);
-            this.premiseButton.Name = "premiseButton";
-            this.premiseButton.Size = new System.Drawing.Size(90, 25);
-            this.premiseButton.TabIndex = 4;
-            this.premiseButton.Text = "Add Premise";
-            this.premiseButton.UseVisualStyleBackColor = true;
+            this.and.Location = new System.Drawing.Point(526, 169);
+            this.and.Name = "and";
+            this.and.Size = new System.Drawing.Size(32, 32);
+            this.and.TabIndex = 4;
+            this.and.Text = "∧";
+            this.and.UseVisualStyleBackColor = true;
+            this.and.Click += new System.EventHandler(this.and_Click);
             // 
-            // goalButton
+            // or
             // 
-            this.goalButton.Location = new System.Drawing.Point(546, 158);
-            this.goalButton.Name = "goalButton";
-            this.goalButton.Size = new System.Drawing.Size(90, 25);
-            this.goalButton.TabIndex = 5;
-            this.goalButton.Text = "Add Goal";
-            this.goalButton.UseVisualStyleBackColor = true;
+            this.or.Location = new System.Drawing.Point(564, 169);
+            this.or.Name = "or";
+            this.or.Size = new System.Drawing.Size(32, 32);
+            this.or.TabIndex = 5;
+            this.or.Text = "∨";
+            this.or.UseVisualStyleBackColor = true;
+            this.or.Click += new System.EventHandler(this.or_Click);
+            // 
+            // not
+            // 
+            this.not.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.not.Location = new System.Drawing.Point(602, 169);
+            this.not.Name = "not";
+            this.not.Size = new System.Drawing.Size(32, 32);
+            this.not.TabIndex = 6;
+            this.not.Text = "¬";
+            this.not.UseVisualStyleBackColor = true;
+            this.not.Click += new System.EventHandler(this.not_Click);
+            // 
+            // cond
+            // 
+            this.cond.Location = new System.Drawing.Point(548, 207);
+            this.cond.Name = "cond";
+            this.cond.Size = new System.Drawing.Size(32, 32);
+            this.cond.TabIndex = 7;
+            this.cond.Text = "→";
+            this.cond.UseVisualStyleBackColor = true;
+            this.cond.Click += new System.EventHandler(this.cond_Click);
+            // 
+            // bicond
+            // 
+            this.bicond.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bicond.Location = new System.Drawing.Point(586, 207);
+            this.bicond.Name = "bicond";
+            this.bicond.Size = new System.Drawing.Size(32, 32);
+            this.bicond.TabIndex = 8;
+            this.bicond.Text = "↔";
+            this.bicond.UseVisualStyleBackColor = true;
+            this.bicond.Click += new System.EventHandler(this.bicond_Click);
+            // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(546, 127);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(68, 25);
+            this.closeButton.TabIndex = 9;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -89,14 +136,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(674, 507);
-            this.Controls.Add(this.goalButton);
-            this.Controls.Add(this.premiseButton);
+            this.Controls.Add(this.closeButton);
+            this.Controls.Add(this.bicond);
+            this.Controls.Add(this.cond);
+            this.Controls.Add(this.not);
+            this.Controls.Add(this.or);
+            this.Controls.Add(this.and);
             this.Controls.Add(this.verifyButton);
             this.Controls.Add(this.branchButton);
             this.Controls.Add(this.levelButton);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
 
         }
@@ -106,8 +159,12 @@
         private System.Windows.Forms.Button levelButton;
         private System.Windows.Forms.Button branchButton;
         private System.Windows.Forms.Button verifyButton;
-        private System.Windows.Forms.Button premiseButton;
-        private System.Windows.Forms.Button goalButton;
+        private System.Windows.Forms.Button and;
+        private System.Windows.Forms.Button or;
+        private System.Windows.Forms.Button not;
+        private System.Windows.Forms.Button cond;
+        private System.Windows.Forms.Button bicond;
+        private System.Windows.Forms.Button closeButton;
     }
 }
 
