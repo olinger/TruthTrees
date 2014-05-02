@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.PowerPacks;
 
 namespace TruthTreesGUI
 {
@@ -56,6 +57,8 @@ namespace TruthTreesGUI
                 p.addChild(down);
                 parent.reposition();
                 txtDown.Location = new System.Drawing.Point(down.x, down.y);
+                parent.drawLines();
+                drawLines(p);
             }
             this.Controls.Add(txtDown);
         }
@@ -88,6 +91,28 @@ namespace TruthTreesGUI
                 p.reposition();
                 txtRight.Location = new System.Drawing.Point(right.x, right.y);
                 txtLeft.Location = new System.Drawing.Point(left.x, left.y);
+                parent.drawLines();
+                drawLines(p);
+            }
+        }
+
+        private void drawLines(TTNode current)
+        {
+            ShapeContainer canvas = new ShapeContainer();
+            foreach (Line line in current.linesToChildren)
+            {
+                LineShape theLine = new LineShape();
+                // Set the form as the parent of the ShapeContainer.
+                canvas.Parent = this;
+                // Set the ShapeContainer as the parent of the LineShape.
+                theLine.Parent = canvas;
+                // Set the starting and ending coordinates for the line.
+                theLine.StartPoint = new System.Drawing.Point(line.p1.X, line.p1.Y);
+                theLine.EndPoint = new System.Drawing.Point(line.p2.X, line.p2.Y);
+            }
+            foreach (TTNode child in current.children)
+            {
+                drawLines(child);
             }
         }
 
@@ -96,9 +121,6 @@ namespace TruthTreesGUI
            
         }
 
-        private void lineShape1_Click(object sender, EventArgs e)
-        {
-        }
 
     }
 }
