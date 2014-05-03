@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.PowerPacks;
+using System.Diagnostics; // Process
+using System.IO; // StreamWriter
+
 
 namespace TruthTreesGUI
 {
@@ -259,7 +262,34 @@ namespace TruthTreesGUI
 
         private bool verifySentences(List<string> toVerify)
         {
-            return true;
+            int ExitCode;
+            ProcessStartInfo ProcessInfo;
+            Process Process;
+            ProcessInfo = new ProcessStartInfo();
+            ProcessInfo.FileName = @"C:\Python27\python.exe";
+            string args="";
+            foreach(string x in toVerify)
+            {
+                args+=x+" ";
+            }
+            string path = @"test.py";
+            args=path+" " + args;
+            ProcessInfo.Arguments=args;
+            ProcessInfo.CreateNoWindow=true;
+            ProcessInfo.UseShellExecute=false;
+            ProcessInfo.RedirectStandardOutput=true;
+
+            Process=Process.Start(ProcessInfo);
+            Process.WaitForExit();
+            ExitCode=Process.ExitCode;
+            Process.Close();
+            if (ExitCode == 0)
+            {
+                Console.WriteLine("verified");
+                return true;
+            }
+            Console.WriteLine("failed to verify");
+            return false;
         }
 
         private string replaceSymbols(string s)
@@ -289,14 +319,32 @@ namespace TruthTreesGUI
             }
             if (verifySentences(toVerify))
             {
+                foreach (Label label in Controls.OfType<Label>())
+                {
+                    if (label.Text=="failed")
+                    {
+                        label.Dispose();
+                    }
+                }
                 checkOffCount++;
                 Label verifyBranch = new Label();
                 verifyBranch.Text = "✓" + checkOffCount;
-                verifyBranch.Location = new System.Drawing.Point(checkedboxes[0].Location.X + 15, checkedboxes[0].Location.Y-3);
+                verifyBranch.Location = new System.Drawing.Point(checkedboxes[0].Location.X + 15, checkedboxes[0].Location.Y - 3);
                 verifyBranch.ForeColor = Color.Green;
                 Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
                 verifyBranch.Font = font;
                 this.Controls.Add(verifyBranch);
+            }
+            else
+            {
+                Label incorrect = new Label();
+                incorrect.Text = "failed"; incorrect.Location = new System.Drawing.Point(checkedboxes[0].Location.X + 15, checkedboxes[0].Location.Y - 3);
+                incorrect.ForeColor = Color.Red;
+                Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
+                incorrect.Font = font;
+                this.Controls.Add(incorrect);
+                
+
             }
            
         }
