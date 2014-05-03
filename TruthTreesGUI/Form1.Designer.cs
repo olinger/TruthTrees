@@ -38,6 +38,7 @@
             this.bicond = new System.Windows.Forms.Button();
             this.closedButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.Button();
+            this.clearSelect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // levelButton
@@ -142,13 +143,26 @@
             this.openButton.UseVisualStyleBackColor = true;
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
+            // clearSelect
+            // 
+            this.clearSelect.Location = new System.Drawing.Point(533, 280);
+            this.clearSelect.Name = "clearSelect";
+            this.clearSelect.Size = new System.Drawing.Size(100, 25);
+            this.clearSelect.TabIndex = 11;
+            this.clearSelect.Text = "Clear Selection";
+            this.clearSelect.UseVisualStyleBackColor = true;
+            this.clearSelect.Click += new System.EventHandler(this.clearSelect_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(674, 507);
+            this.Controls.Add(this.clearSelect);
             this.Controls.Add(this.openButton);
             this.Controls.Add(this.closedButton);
             this.Controls.Add(this.bicond);
@@ -180,6 +194,7 @@
         private System.Windows.Forms.Button bicond;
         private System.Windows.Forms.Button closedButton;
         private System.Windows.Forms.Button openButton;
+        private System.Windows.Forms.Button clearSelect;
     }
 }
 

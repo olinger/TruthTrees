@@ -18,6 +18,7 @@ namespace TruthTreesGUI
         public bool clicked = false;
         private bool specialKeyPressed = false;
         public int checkOffCount = 0;
+        public List<CheckBox> checkboxes = new List<CheckBox>();
         public Form1()
         {
             InitializeComponent(); 
@@ -83,7 +84,7 @@ namespace TruthTreesGUI
             chkDown.Size = new System.Drawing.Size(15, 15);
             this.Controls.Add(chkDown);
             down.cb = chkDown;
-
+            checkboxes.Add(chkDown);
             focusedTextbox = txtDown;
         }
 
@@ -135,9 +136,10 @@ namespace TruthTreesGUI
             chkLeft.Size = new System.Drawing.Size(15, 15);
             this.Controls.Add(chkRight);
             this.Controls.Add(chkLeft);
-            left.cb = chkLeft;
             right.cb = chkRight;
-
+            left.cb = chkLeft;
+            checkboxes.Add(chkRight);
+            checkboxes.Add(chkLeft);
             focusedTextbox = txtRight;
         }
 
@@ -255,16 +257,48 @@ namespace TruthTreesGUI
             }
         }
 
+        private bool verifySentences(List<string> toVerify)
+        {
+            return true;
+        }
+
+        private string replaceSymbols(string s)
+        {
+            s = s.Replace('∧', '&');
+            s = s.Replace('∨', '|');
+            s = s.Replace('¬', '~');
+            s = s.Replace('→', '$');
+            s = s.Replace('↔', '%');
+            return s;
+        }
+
         private void verifyButton_Click(object sender, EventArgs e)
         {
-            checkOffCount++;
-            Label verifyBranch = new Label();
-            verifyBranch.Text = "✓" + checkOffCount;
-            verifyBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 75, focusedTextbox.Location.Y);
-            verifyBranch.ForeColor = Color.Green;
-            Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
-            verifyBranch.Font = font;
-            this.Controls.Add(verifyBranch);
+            List<string> toVerify = new List<string>();
+            List<CheckBox> checkedboxes = new List<CheckBox>();
+            foreach (CheckBox chk in checkboxes) 
+            {
+                if (chk.Checked)
+                {
+                    string txt = chk.Tag.ToString();
+                    txt = replaceSymbols(txt);
+                    toVerify.Add(txt);
+                    checkedboxes.Add(chk);
+                    Console.WriteLine(txt);
+                }
+            }
+            if (verifySentences(toVerify))
+            {
+                checkOffCount++;
+                Label verifyBranch = new Label();
+                verifyBranch.Text = "✓" + checkOffCount;
+                verifyBranch.Location = new System.Drawing.Point(checkedboxes[0].Location.X + 15, checkedboxes[0].Location.Y-3);
+                verifyBranch.ForeColor = Color.Green;
+                Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
+                verifyBranch.Font = font;
+                this.Controls.Add(verifyBranch);
+            }
+           
         }
 
         private void closedButton_Click(object sender, EventArgs e)
@@ -289,6 +323,15 @@ namespace TruthTreesGUI
             Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
             openBranch.Font = font;
             this.Controls.Add(openBranch);
+        }
+
+        private void clearSelect_Click(object sender, EventArgs e)
+        {
+            foreach (CheckBox chk in checkboxes)
+            {
+                if (chk.Checked)
+                    chk.Checked = false;
+            }
         }
 
     }
