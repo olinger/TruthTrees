@@ -39,6 +39,7 @@
             this.closedButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.Button();
             this.clearSelect = new System.Windows.Forms.Button();
+            this.clearAll = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // levelButton
@@ -153,6 +154,16 @@
             this.clearSelect.UseVisualStyleBackColor = true;
             this.clearSelect.Click += new System.EventHandler(this.clearSelect_Click);
             // 
+            // clearAll
+            // 
+            this.clearAll.Location = new System.Drawing.Point(533, 335);
+            this.clearAll.Name = "clearAll";
+            this.clearAll.Size = new System.Drawing.Size(100, 25);
+            this.clearAll.TabIndex = 12;
+            this.clearAll.Text = "Clear All";
+            this.clearAll.UseVisualStyleBackColor = true;
+            this.clearAll.Click += new System.EventHandler(this.clearAll_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -162,6 +173,7 @@
             this.AutoScrollMargin = new System.Drawing.Size(20, 20);
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(674, 507);
+            this.Controls.Add(this.clearAll);
             this.Controls.Add(this.clearSelect);
             this.Controls.Add(this.openButton);
             this.Controls.Add(this.closedButton);
@@ -195,6 +207,7 @@
         private System.Windows.Forms.Button closedButton;
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button clearSelect;
+        private System.Windows.Forms.Button clearAll;
     }
 }
 

@@ -206,8 +206,52 @@ namespace TruthTreesGUI
             focusedTextbox.Select(focusedTextbox.Text.Length, 0);
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void shiftFocus(string direction) //move through tree on keyboard arrow shortcut
         {
+            TTNode current = parent.findByText(focusedTextbox.Text);
+            TextBox newFocus = focusedTextbox;
+            if (direction == "d")
+            {
+                /*
+                TTNode nextSib = current.nextCenterSibling();
+                if (nextSib != null)
+                {
+                    newFocus = nextSib.tb;
+                }
+                else
+                {
+                    if (current.hasChild())
+                        newFocus = current.children[0].tb;
+                }*/
+                if (current.hasChild())
+                    newFocus = current.children[0].tb;
+
+            }
+            else if (direction == "u")
+            {
+                /* TTNode prevSib = current.previousCenterSibling();
+                 if (prevSib != null)
+                 {
+                     newFocus = prevSib.tb;
+                 }
+                 else
+                 {
+                     if(current.parent!=null)
+                         newFocus = current.parent.tb;
+                 }*/
+            }
+            else if (direction == "l")
+            {
+            }
+            else if (direction == "r")
+            {
+            }
+            newFocus.Focus();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e) //all keyboard shorcuts
+        {
+            //symbol shortcuts
             if (e.KeyCode == Keys.D7 && e.Shift)
             {
                 specialKeyPressed = true;
@@ -233,6 +277,7 @@ namespace TruthTreesGUI
                 specialKeyPressed = true;
                 bicond_Click(sender, e);
             }
+            //button function shortcuts
             if (e.KeyCode == Keys.B && e.Control)
             {
                 specialKeyPressed = true;
@@ -258,6 +303,23 @@ namespace TruthTreesGUI
                 specialKeyPressed = true;
                 verifyButton_Click(sender, e);
             }
+            //navigation shortcuts
+            if (e.KeyCode == Keys.Down && e.Control)
+            {
+                shiftFocus("d");
+            }
+            if (e.KeyCode == Keys.Up && e.Control)
+            {
+                shiftFocus("u");
+            }
+            if (e.KeyCode == Keys.Left && e.Control)
+            {
+                shiftFocus("l");
+            }
+            if (e.KeyCode == Keys.Right && e.Control)
+            {
+                shiftFocus("r");
+            }
         }
 
         private bool verifySentences(List<string> toVerify)
@@ -272,17 +334,19 @@ namespace TruthTreesGUI
             {
                 args+=x+" ";
             }
-            string path = @"test.py";
-            args=path+" " + args;
+            string path = @"verifyRule.py";
+            args=path+ " " + args;
+            Console.WriteLine(args);
             ProcessInfo.Arguments=args;
             ProcessInfo.CreateNoWindow=true;
-            ProcessInfo.UseShellExecute=false;
-            ProcessInfo.RedirectStandardOutput=true;
+            ProcessInfo.UseShellExecute=true;
+            //ProcessInfo.RedirectStandardOutput=false;
 
             Process=Process.Start(ProcessInfo);
             Process.WaitForExit();
             ExitCode=Process.ExitCode;
             Process.Close();
+            Console.WriteLine(ExitCode);
             if (ExitCode == 0)
             {
                 Console.WriteLine("verified");
@@ -297,8 +361,8 @@ namespace TruthTreesGUI
             s = s.Replace('∧', '&');
             s = s.Replace('∨', '|');
             s = s.Replace('¬', '~');
-            s = s.Replace('→', '$');
-            s = s.Replace('↔', '%');
+            s = s.Replace('→', '$'); //->
+            s = s.Replace('↔', '%'); //<-->
             return s;
         }
 
@@ -306,16 +370,33 @@ namespace TruthTreesGUI
         {
             List<string> toVerify = new List<string>();
             List<CheckBox> checkedboxes = new List<CheckBox>();
+            int ghettoCount = 0;
+            string ruleType = "";
             foreach (CheckBox chk in checkboxes) 
             {
                 if (chk.Checked)
                 {
-                    string txt = chk.Tag.ToString();
-                    txt = replaceSymbols(txt);
-                    toVerify.Add(txt);
+                    TTNode t = chk.Tag as TTNode;
+                    if (t != null)
+                    {
+                        toVerify.Add(t.ToString());
+                        if (ghettoCount == 1)
+                        {
+                            string type = t.tb.Tag.ToString();
+                            if (type == "C")
+                                ruleType = "D";
+                            else
+                                ruleType = "B";
+                        }
+                        ghettoCount++;
+                    }
                     checkedboxes.Add(chk);
-                    Console.WriteLine(txt);
                 }
+            }
+            toVerify.Add(ruleType);
+            for(int i=0;i<toVerify.Count;i++)
+            {
+                toVerify[i] = replaceSymbols(toVerify[i]);
             }
             if (verifySentences(toVerify))
             {
@@ -380,6 +461,11 @@ namespace TruthTreesGUI
                 if (chk.Checked)
                     chk.Checked = false;
             }
+        }
+
+        private void clearAll_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
