@@ -16,7 +16,7 @@ if __name__ == "__main__":
         children = sys.argv[2:-1]
         print("Parent: ", parent)
         print("Childran: ", children)
-        if not (checkBranch(parent, children) == True):
+        if not (checkBranch(parent, children)):
             print(False)
             sys.exit(1)
         print(True)
@@ -26,14 +26,14 @@ if __name__ == "__main__":
         if not checkContradiction(parent, children):
             print(False)
             sys.exit(1)    
-        print(True) 
+        print(True)
     elif rule == "Open":
         parent = sys.argv[1]    
         children = sys.argv[2:-1]
         if not checkOpen(children):
             print(False)
             sys.exit(1)
-        print(True)             
+        print(True)
     else:
         sys.exit(1)
 

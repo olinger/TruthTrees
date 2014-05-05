@@ -17,6 +17,7 @@ namespace TruthTreesGUI
     public partial class Form1 : Form
     {
         public TTNode parent;
+        public TTNode focusNode;
         public TextBox focusedTextbox = null;
         public bool clicked = false;
         private bool specialKeyPressed = false;
@@ -25,7 +26,7 @@ namespace TruthTreesGUI
         public Form1()
         {
             InitializeComponent(); 
-            foreach(TextBox tb in this.Controls.OfType<TextBox>())
+            foreach(TextBox tb in this.panel1.Controls.OfType<TextBox>())
             {
                 tb.GotFocus += textBox_Enter;
             }
@@ -54,20 +55,20 @@ namespace TruthTreesGUI
                 return;
             TextBox txtDown = new TextBox();
             txtDown.Name = "txtDown";
-            txtDown.Size = new System.Drawing.Size(50, 25);
+            txtDown.Size = new System.Drawing.Size(80, 25);
             txtDown.GotFocus += textBox_Enter;
             txtDown.KeyPress += textBox_KeyPress;
             txtDown.Tag = "C";
             TTNode down = new TTNode(txtDown);
             if (!clicked)
             {
-                down.x = 230;
+                down.x = 260;
                 down.y = 50;
                 parent = down;
                 clicked = true;
                 txtDown.Location = new System.Drawing.Point(parent.x, parent.y);
             }
-            if (focusedTextbox != null)
+            else if (focusedTextbox != null)
             {
                 TTNode p = parent.find(focusedTextbox);
 
@@ -78,14 +79,15 @@ namespace TruthTreesGUI
                 parent.drawLines();
                 drawLines(p);
             }
-            this.Controls.Add(txtDown);
+            panel1.Controls.Add(txtDown);
 
             //create corresponding checkbox
             CheckBox chkDown = new CheckBox();
-            chkDown.Location = new System.Drawing.Point(down.x + 60, down.y+3);
+            chkDown.Location = new System.Drawing.Point(down.x + 87, down.y + 3);
             chkDown.Tag = down;
             chkDown.Size = new System.Drawing.Size(15, 15);
-            this.Controls.Add(chkDown);
+            // panel1.Controls.Add(chkDown);
+            panel1.Controls.Add(txtDown);
             down.cb = chkDown;
             checkboxes.Add(chkDown);
             focusedTextbox = txtDown;
@@ -99,20 +101,21 @@ namespace TruthTreesGUI
             TextBox txtLeft = new TextBox();
             txtLeft.Name = "txtLeft";
             txtRight.Name = "txtRight";
-            txtRight.Size = new System.Drawing.Size(50, 25);
-            txtLeft.Size = new System.Drawing.Size(50, 25);
+            txtRight.Size = new System.Drawing.Size(80, 25);
+            txtLeft.Size = new System.Drawing.Size(80, 25);
             txtRight.GotFocus += textBox_Enter;
             txtRight.KeyPress += textBox_KeyPress;
             txtLeft.GotFocus += textBox_Enter;
             txtLeft.KeyPress += textBox_KeyPress;
             txtRight.Tag = "R";
             txtLeft.Tag = "L";
-            this.Controls.Add(txtRight);
-            this.Controls.Add(txtLeft);
+            panel1.Controls.Add(txtRight);
+            panel1.Controls.Add(txtLeft);
 
             TTNode left = new TTNode(txtLeft);
             TTNode right = new TTNode(txtRight);
-
+            left.sibling = right;
+            right.sibling = left;
             if (focusedTextbox != null)
             {
                 TTNode p = parent.find(focusedTextbox);
@@ -130,15 +133,16 @@ namespace TruthTreesGUI
             //create corresponding checkboxes
             CheckBox chkRight = new CheckBox();
             CheckBox chkLeft = new CheckBox();
-            chkRight.Location = new System.Drawing.Point(right.x + 60, right.y+3);
-            chkLeft.Location = new System.Drawing.Point(left.x + 60, left.y+3);
+            chkRight.Location = new System.Drawing.Point(right.x + 87, right.y + 3);
+            chkLeft.Location = new System.Drawing.Point(left.x + 87, left.y + 3);
             chkLeft.Size = new System.Drawing.Size(10, 10);
             chkRight.Tag = right;
             chkLeft.Tag = left;
             chkRight.Size = new System.Drawing.Size(15, 15);
             chkLeft.Size = new System.Drawing.Size(15, 15);
-            this.Controls.Add(chkRight);
-            this.Controls.Add(chkLeft);
+            panel1.Controls.Add(chkRight);
+            panel1.Controls.Add(chkLeft);
+
             right.cb = chkRight;
             left.cb = chkLeft;
             checkboxes.Add(chkRight);
@@ -146,19 +150,14 @@ namespace TruthTreesGUI
             focusedTextbox = txtRight;
         }
 
+
         private void drawLines(TTNode current)
         {
             ShapeContainer canvas = new ShapeContainer();
-            foreach (Line line in current.linesToChildren)
+            foreach (LineShape line in current.linesToChildren)
             {
-                LineShape theLine = new LineShape();
-                // Set the form as the parent of the ShapeContainer.
-                canvas.Parent = this;
-                // Set the ShapeContainer as the parent of the LineShape.
-                theLine.Parent = canvas;
-                // Set the starting and ending coordinates for the line.
-                theLine.StartPoint = new System.Drawing.Point(line.p1.X, line.p1.Y);
-                theLine.EndPoint = new System.Drawing.Point(line.p2.X, line.p2.Y);
+                canvas.Parent = panel1;
+                line.Parent = canvas;
             }
             foreach (TTNode child in current.children)
             {
@@ -204,49 +203,6 @@ namespace TruthTreesGUI
             focusedTextbox.Text += bicond.Text;
             focusedTextbox.Focus();
             focusedTextbox.Select(focusedTextbox.Text.Length, 0);
-        }
-
-        private void shiftFocus(string direction) //move through tree on keyboard arrow shortcut
-        {
-            TTNode current = parent.findByText(focusedTextbox.Text);
-            TextBox newFocus = focusedTextbox;
-            if (direction == "d")
-            {
-                /*
-                TTNode nextSib = current.nextCenterSibling();
-                if (nextSib != null)
-                {
-                    newFocus = nextSib.tb;
-                }
-                else
-                {
-                    if (current.hasChild())
-                        newFocus = current.children[0].tb;
-                }*/
-                if (current.hasChild())
-                    newFocus = current.children[0].tb;
-
-            }
-            else if (direction == "u")
-            {
-                /* TTNode prevSib = current.previousCenterSibling();
-                 if (prevSib != null)
-                 {
-                     newFocus = prevSib.tb;
-                 }
-                 else
-                 {
-                     if(current.parent!=null)
-                         newFocus = current.parent.tb;
-                 }*/
-            }
-            else if (direction == "l")
-            {
-            }
-            else if (direction == "r")
-            {
-            }
-            newFocus.Focus();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e) //all keyboard shorcuts
@@ -303,22 +259,15 @@ namespace TruthTreesGUI
                 specialKeyPressed = true;
                 verifyButton_Click(sender, e);
             }
-            //navigation shortcuts
-            if (e.KeyCode == Keys.Down && e.Control)
+            if (e.KeyCode == Keys.D && e.Control)
             {
-                shiftFocus("d");
+                specialKeyPressed = true;
+                deleteNode_Click(sender, e);
             }
-            if (e.KeyCode == Keys.Up && e.Control)
+            if (e.KeyCode == Keys.D && e.Control && e.Shift)
             {
-                shiftFocus("u");
-            }
-            if (e.KeyCode == Keys.Left && e.Control)
-            {
-                shiftFocus("l");
-            }
-            if (e.KeyCode == Keys.Right && e.Control)
-            {
-                shiftFocus("r");
+                specialKeyPressed = true;
+                clearAll_Click(sender, e);
             }
         }
 
@@ -339,8 +288,8 @@ namespace TruthTreesGUI
             Console.WriteLine(args);
             ProcessInfo.Arguments=args;
             ProcessInfo.CreateNoWindow=true;
-            ProcessInfo.UseShellExecute=true;
-            //ProcessInfo.RedirectStandardOutput=false;
+            ProcessInfo.UseShellExecute=false;
+            ProcessInfo.RedirectStandardOutput=true;
 
             Process=Process.Start(ProcessInfo);
             Process.WaitForExit();
@@ -361,7 +310,7 @@ namespace TruthTreesGUI
             s = s.Replace('∧', '&');
             s = s.Replace('∨', '|');
             s = s.Replace('¬', '~');
-            s = s.Replace('→', '$'); //->
+            s = s.Replace("→", "->"); //->
             s = s.Replace('↔', '%'); //<-->
             return s;
         }
@@ -400,7 +349,7 @@ namespace TruthTreesGUI
             }
             if (verifySentences(toVerify))
             {
-                foreach (Label label in Controls.OfType<Label>())
+                foreach (Label label in panel1.Controls.OfType<Label>())
                 {
                     if (label.Text=="failed")
                     {
@@ -414,18 +363,21 @@ namespace TruthTreesGUI
                 verifyBranch.ForeColor = Color.Green;
                 Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
                 verifyBranch.Font = font;
-                this.Controls.Add(verifyBranch);
+                panel1.Controls.Add(verifyBranch);
             }
             else
             {
                 Label incorrect = new Label();
-                incorrect.Text = "failed"; incorrect.Location = new System.Drawing.Point(checkedboxes[0].Location.X + 15, checkedboxes[0].Location.Y - 3);
+                incorrect.Text = "failed"; 
+                incorrect.Location = new System.Drawing.Point(checkedboxes[0].Location.X + 15, checkedboxes[0].Location.Y - 3);
                 incorrect.ForeColor = Color.Red;
                 Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
                 incorrect.Font = font;
-                this.Controls.Add(incorrect);
-                
-
+                panel1.Controls.Add(incorrect);
+            }
+            foreach (CheckBox chk in panel1.Controls.OfType<CheckBox>())
+            {
+                chk.Checked = false;
             }
            
         }
@@ -439,7 +391,7 @@ namespace TruthTreesGUI
             closedBranch.ForeColor = Color.Red;
             Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
             closedBranch.Font = font;
-            this.Controls.Add(closedBranch);
+            panel1.Controls.Add(closedBranch);
         }
 
         private void openButton_Click(object sender, EventArgs e)
@@ -451,7 +403,7 @@ namespace TruthTreesGUI
             openBranch.ForeColor = Color.Orange;
             Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
             openBranch.Font = font;
-            this.Controls.Add(openBranch);
+            panel1.Controls.Add(openBranch);
         }
 
         private void clearSelect_Click(object sender, EventArgs e)
@@ -463,7 +415,80 @@ namespace TruthTreesGUI
             }
         }
 
+        private void delete(TTNode current)
+        {
+            if (current != null)
+            {
+                foreach (LineShape line in current.linesToChildren)
+                {
+                    line.Dispose();
+                }
+                current.linesToChildren.Clear();
+                if(current.parent!=null)
+                    current.parent.children.Clear();
+                current.delete();
+            }
+        }
+
         private void clearAll_Click(object sender, EventArgs e)
+        {
+            if (parent != null)
+            {
+                parent.delete();
+                parent = null;
+            }
+            checkboxes.Clear();
+            foreach (LineShape line in this.panel1.Controls.OfType<LineShape>())
+            {
+                line.Parent.Dispose();
+                line.Dispose();
+            }
+            clicked = false;
+            foreach (Label lbl in this.panel1.Controls.OfType<Label>())
+            {
+                lbl.Dispose();
+            }
+        }
+
+        private void deleteNode_Click(object sender, EventArgs e)
+        {
+            TTNode current = parent.find(focusedTextbox);
+            
+            if (current != null)
+            {
+                TTNode p = current.parent;
+                current.delete();
+                if (p != null)
+                {
+                    p.linesToChildren.Clear();
+                    p.children.Clear();
+                    p.drawLines();
+                    drawLines(p);
+                }
+            }
+            foreach (LineShape line in this.panel1.Controls.OfType<LineShape>())
+            {
+                line.Parent.Dispose();
+                line.Dispose();
+            }
+            foreach (ShapeContainer shp in this.panel1.Controls.OfType<ShapeContainer>())
+            {
+                shp.Dispose();
+            }
+            checkboxes.Clear();
+
+            foreach (CheckBox chk in this.panel1.Controls.OfType<CheckBox>())
+            {
+                checkboxes.Add(chk);
+            }
+        }
+
+        private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripDropDownButton1_Click(object sender, EventArgs e)
         {
 
         }

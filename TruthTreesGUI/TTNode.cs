@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using Microsoft.VisualBasic.PowerPacks;
 
 namespace TruthTreesGUI
 {
@@ -15,9 +16,13 @@ namespace TruthTreesGUI
         public TextBox tb;
         public int x;
         public int y;
-        public List<Line> linesToChildren;
+        public List<LineShape> linesToChildren;
+        public LineShape lineToParent;
+        public TTNode sibling;
         public CheckBox cb;
         public int level;
+        public string tag;
+        bool siblingDeleted;
 
         public TTNode(TextBox _tb, TTNode _parent=null)
         {
@@ -26,12 +31,39 @@ namespace TruthTreesGUI
             children = new List<TTNode>();
             x = _tb.Location.X;
             y = _tb.Location.Y;
-            linesToChildren = new List<Line>();
+            linesToChildren = new List<LineShape>();
             if (_parent == null)
                 level = 0;
             else
                 level = parent.level + 1;
+            siblingDeleted = false;
         }
+
+        public void delete()
+        {
+            foreach (TTNode child in children)
+            {
+                child.delete();
+            }
+            tb.Dispose();
+            cb.Dispose();
+            linesToChildren.Clear();
+            if (lineToParent != null)
+            {
+                lineToParent.Dispose();
+                lineToParent = null;
+            }
+            if (parent != null)
+            {
+                parent.linesToChildren.Clear();
+            }
+            if (sibling != null && !siblingDeleted)
+            {
+                siblingDeleted = true;
+                sibling.delete();
+            }
+        }
+
         public void addChild(TTNode child)
         {
             children.Add(child);
@@ -61,33 +93,32 @@ namespace TruthTreesGUI
 
         public void reposition() //reposition the tree when a new child is added
         {
-            TTNode current = this;
             foreach (TTNode child in children)
             {
-                child.x = current.x;
-                string parentTag = current.tb.Tag.ToString();
+                child.x = x;
+                string parentTag = tb.Tag.ToString();
                 string tag = child.tb.Tag.ToString();
                 if (parentTag == "R")
                 {
                     if (tag == "R")
-                        child.x += 105;
+                        child.x += 120;
                 }
                 if (parentTag == "L")
                 {
                     if (tag == "L")
-                        child.x -= 105;
+                        child.x -= 120;
                 }
                 if (parentTag == "C")
                 {
                     if (tag == "L")
-                        child.x -= 55;
+                        child.x -= 70;
                     if (tag == "R")
-                        child.x += 55;
+                        child.x += 70;
                 }
-                child.y = current.y + 55;
+                child.y = y + 55;
                 if (tag == "C")
                 {
-                    child.y = current.y + 25;
+                    child.y = y + 25;
                 }
                 if (child.hasChild())
                 {
@@ -100,10 +131,13 @@ namespace TruthTreesGUI
         {
             foreach (TTNode child in this.children)
             {
-                Point start = new Point(this.x+25,this.y+25);
-                Point end = new Point(child.x+25,child.y);
-                Line l = new Line(start,end);
+                LineShape l = new LineShape();
+                Point start = new Point(this.x+40,this.y+25);
+                Point end = new Point(child.x+40,child.y);
+                l.StartPoint = new System.Drawing.Point(start.X, start.Y);
+                l.EndPoint = new System.Drawing.Point(end.X, end.Y);
                 linesToChildren.Add(l);
+                child.lineToParent = l;
                 child.drawLines();
             }
         }

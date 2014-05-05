@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.levelButton = new System.Windows.Forms.Button();
             this.branchButton = new System.Windows.Forms.Button();
             this.verifyButton = new System.Windows.Forms.Button();
@@ -40,11 +41,19 @@
             this.openButton = new System.Windows.Forms.Button();
             this.clearSelect = new System.Windows.Forms.Button();
             this.clearAll = new System.Windows.Forms.Button();
+            this.deleteNode = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // levelButton
             // 
-            this.levelButton.Location = new System.Drawing.Point(546, 34);
+            this.levelButton.Location = new System.Drawing.Point(790, 28);
             this.levelButton.Name = "levelButton";
             this.levelButton.Size = new System.Drawing.Size(68, 25);
             this.levelButton.TabIndex = 1;
@@ -54,7 +63,7 @@
             // 
             // branchButton
             // 
-            this.branchButton.Location = new System.Drawing.Point(546, 65);
+            this.branchButton.Location = new System.Drawing.Point(790, 59);
             this.branchButton.Name = "branchButton";
             this.branchButton.Size = new System.Drawing.Size(68, 25);
             this.branchButton.TabIndex = 2;
@@ -64,7 +73,7 @@
             // 
             // verifyButton
             // 
-            this.verifyButton.Location = new System.Drawing.Point(546, 96);
+            this.verifyButton.Location = new System.Drawing.Point(790, 90);
             this.verifyButton.Name = "verifyButton";
             this.verifyButton.Size = new System.Drawing.Size(68, 25);
             this.verifyButton.TabIndex = 3;
@@ -74,7 +83,7 @@
             // 
             // and
             // 
-            this.and.Location = new System.Drawing.Point(525, 192);
+            this.and.Location = new System.Drawing.Point(769, 186);
             this.and.Name = "and";
             this.and.Size = new System.Drawing.Size(32, 32);
             this.and.TabIndex = 4;
@@ -84,7 +93,7 @@
             // 
             // or
             // 
-            this.or.Location = new System.Drawing.Point(563, 192);
+            this.or.Location = new System.Drawing.Point(807, 186);
             this.or.Name = "or";
             this.or.Size = new System.Drawing.Size(32, 32);
             this.or.TabIndex = 5;
@@ -95,7 +104,7 @@
             // not
             // 
             this.not.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.not.Location = new System.Drawing.Point(601, 192);
+            this.not.Location = new System.Drawing.Point(845, 186);
             this.not.Name = "not";
             this.not.Size = new System.Drawing.Size(32, 32);
             this.not.TabIndex = 6;
@@ -105,7 +114,7 @@
             // 
             // cond
             // 
-            this.cond.Location = new System.Drawing.Point(547, 230);
+            this.cond.Location = new System.Drawing.Point(791, 224);
             this.cond.Name = "cond";
             this.cond.Size = new System.Drawing.Size(32, 32);
             this.cond.TabIndex = 7;
@@ -116,7 +125,7 @@
             // bicond
             // 
             this.bicond.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bicond.Location = new System.Drawing.Point(585, 230);
+            this.bicond.Location = new System.Drawing.Point(829, 224);
             this.bicond.Name = "bicond";
             this.bicond.Size = new System.Drawing.Size(32, 32);
             this.bicond.TabIndex = 8;
@@ -126,7 +135,7 @@
             // 
             // closedButton
             // 
-            this.closedButton.Location = new System.Drawing.Point(546, 127);
+            this.closedButton.Location = new System.Drawing.Point(790, 121);
             this.closedButton.Name = "closedButton";
             this.closedButton.Size = new System.Drawing.Size(68, 25);
             this.closedButton.TabIndex = 9;
@@ -136,7 +145,7 @@
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(546, 158);
+            this.openButton.Location = new System.Drawing.Point(790, 152);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(68, 25);
             this.openButton.TabIndex = 10;
@@ -146,7 +155,7 @@
             // 
             // clearSelect
             // 
-            this.clearSelect.Location = new System.Drawing.Point(533, 280);
+            this.clearSelect.Location = new System.Drawing.Point(777, 274);
             this.clearSelect.Name = "clearSelect";
             this.clearSelect.Size = new System.Drawing.Size(100, 25);
             this.clearSelect.TabIndex = 11;
@@ -156,13 +165,74 @@
             // 
             // clearAll
             // 
-            this.clearAll.Location = new System.Drawing.Point(533, 335);
+            this.clearAll.Location = new System.Drawing.Point(777, 360);
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(100, 25);
             this.clearAll.TabIndex = 12;
             this.clearAll.Text = "Clear All";
             this.clearAll.UseVisualStyleBackColor = true;
             this.clearAll.Click += new System.EventHandler(this.clearAll_Click);
+            // 
+            // deleteNode
+            // 
+            this.deleteNode.Location = new System.Drawing.Point(777, 329);
+            this.deleteNode.Name = "deleteNode";
+            this.deleteNode.Size = new System.Drawing.Size(100, 25);
+            this.deleteNode.TabIndex = 13;
+            this.deleteNode.Text = "Delete";
+            this.deleteNode.UseVisualStyleBackColor = true;
+            this.deleteNode.Click += new System.EventHandler(this.deleteNode_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDropDownButton1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(915, 25);
+            this.toolStrip1.TabIndex = 14;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.openToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(38, 22);
+            this.toolStripDropDownButton1.Text = "File";
+            this.toolStripDropDownButton1.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(12, 37);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(730, 659);
+            this.panel1.TabIndex = 15;
             // 
             // Form1
             // 
@@ -172,7 +242,10 @@
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(20, 20);
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(674, 507);
+            this.ClientSize = new System.Drawing.Size(915, 723);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.deleteNode);
             this.Controls.Add(this.clearAll);
             this.Controls.Add(this.clearSelect);
             this.Controls.Add(this.openButton);
@@ -190,7 +263,10 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -208,6 +284,13 @@
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button clearSelect;
         private System.Windows.Forms.Button clearAll;
+        private System.Windows.Forms.Button deleteNode;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
