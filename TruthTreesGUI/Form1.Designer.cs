@@ -48,12 +48,13 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.premiseButton = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // levelButton
             // 
-            this.levelButton.Location = new System.Drawing.Point(790, 28);
+            this.levelButton.Location = new System.Drawing.Point(194, 35);
             this.levelButton.Name = "levelButton";
             this.levelButton.Size = new System.Drawing.Size(68, 25);
             this.levelButton.TabIndex = 1;
@@ -63,7 +64,7 @@
             // 
             // branchButton
             // 
-            this.branchButton.Location = new System.Drawing.Point(790, 59);
+            this.branchButton.Location = new System.Drawing.Point(268, 35);
             this.branchButton.Name = "branchButton";
             this.branchButton.Size = new System.Drawing.Size(68, 25);
             this.branchButton.TabIndex = 2;
@@ -73,7 +74,7 @@
             // 
             // verifyButton
             // 
-            this.verifyButton.Location = new System.Drawing.Point(790, 90);
+            this.verifyButton.Location = new System.Drawing.Point(342, 35);
             this.verifyButton.Name = "verifyButton";
             this.verifyButton.Size = new System.Drawing.Size(68, 25);
             this.verifyButton.TabIndex = 3;
@@ -83,7 +84,7 @@
             // 
             // and
             // 
-            this.and.Location = new System.Drawing.Point(769, 186);
+            this.and.Location = new System.Drawing.Point(589, 28);
             this.and.Name = "and";
             this.and.Size = new System.Drawing.Size(32, 32);
             this.and.TabIndex = 4;
@@ -93,7 +94,7 @@
             // 
             // or
             // 
-            this.or.Location = new System.Drawing.Point(807, 186);
+            this.or.Location = new System.Drawing.Point(627, 28);
             this.or.Name = "or";
             this.or.Size = new System.Drawing.Size(32, 32);
             this.or.TabIndex = 5;
@@ -104,7 +105,7 @@
             // not
             // 
             this.not.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.not.Location = new System.Drawing.Point(845, 186);
+            this.not.Location = new System.Drawing.Point(665, 28);
             this.not.Name = "not";
             this.not.Size = new System.Drawing.Size(32, 32);
             this.not.TabIndex = 6;
@@ -114,7 +115,7 @@
             // 
             // cond
             // 
-            this.cond.Location = new System.Drawing.Point(791, 224);
+            this.cond.Location = new System.Drawing.Point(611, 66);
             this.cond.Name = "cond";
             this.cond.Size = new System.Drawing.Size(32, 32);
             this.cond.TabIndex = 7;
@@ -125,7 +126,7 @@
             // bicond
             // 
             this.bicond.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bicond.Location = new System.Drawing.Point(829, 224);
+            this.bicond.Location = new System.Drawing.Point(649, 66);
             this.bicond.Name = "bicond";
             this.bicond.Size = new System.Drawing.Size(32, 32);
             this.bicond.TabIndex = 8;
@@ -135,7 +136,7 @@
             // 
             // closedButton
             // 
-            this.closedButton.Location = new System.Drawing.Point(790, 121);
+            this.closedButton.Location = new System.Drawing.Point(416, 35);
             this.closedButton.Name = "closedButton";
             this.closedButton.Size = new System.Drawing.Size(68, 25);
             this.closedButton.TabIndex = 9;
@@ -145,7 +146,7 @@
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(790, 152);
+            this.openButton.Location = new System.Drawing.Point(490, 35);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(68, 25);
             this.openButton.TabIndex = 10;
@@ -155,7 +156,7 @@
             // 
             // clearSelect
             // 
-            this.clearSelect.Location = new System.Drawing.Point(777, 274);
+            this.clearSelect.Location = new System.Drawing.Point(180, 66);
             this.clearSelect.Name = "clearSelect";
             this.clearSelect.Size = new System.Drawing.Size(100, 25);
             this.clearSelect.TabIndex = 11;
@@ -165,7 +166,7 @@
             // 
             // clearAll
             // 
-            this.clearAll.Location = new System.Drawing.Point(777, 360);
+            this.clearAll.Location = new System.Drawing.Point(392, 66);
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(100, 25);
             this.clearAll.TabIndex = 12;
@@ -175,7 +176,7 @@
             // 
             // deleteNode
             // 
-            this.deleteNode.Location = new System.Drawing.Point(777, 329);
+            this.deleteNode.Location = new System.Drawing.Point(286, 66);
             this.deleteNode.Name = "deleteNode";
             this.deleteNode.Size = new System.Drawing.Size(100, 25);
             this.deleteNode.TabIndex = 13;
@@ -189,7 +190,7 @@
             this.toolStripDropDownButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(915, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(900, 25);
             this.toolStrip1.TabIndex = 14;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -210,29 +211,40 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.AutoSize = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(12, 37);
+            this.panel1.Location = new System.Drawing.Point(22, 104);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(730, 659);
+            this.panel1.Size = new System.Drawing.Size(856, 593);
             this.panel1.TabIndex = 15;
+            // 
+            // premiseButton
+            // 
+            this.premiseButton.Location = new System.Drawing.Point(120, 35);
+            this.premiseButton.Name = "premiseButton";
+            this.premiseButton.Size = new System.Drawing.Size(68, 25);
+            this.premiseButton.TabIndex = 16;
+            this.premiseButton.Text = "Premise";
+            this.premiseButton.UseVisualStyleBackColor = true;
+            this.premiseButton.Click += new System.EventHandler(this.premiseButton_Click);
             // 
             // Form1
             // 
@@ -242,7 +254,8 @@
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(20, 20);
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(915, 723);
+            this.ClientSize = new System.Drawing.Size(900, 723);
+            this.Controls.Add(this.premiseButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.deleteNode);
@@ -260,7 +273,7 @@
             this.Controls.Add(this.levelButton);
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Truth Trees";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.toolStrip1.ResumeLayout(false);
@@ -291,6 +304,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button premiseButton;
     }
 }
 

@@ -49,10 +49,44 @@ namespace TruthTreesGUI
         int c = 0;
         Point location = new Point(0, 0);
 
+        private void premiseButton_Click(object sender, EventArgs e)
+        {
+            TextBox txtPremise = new TextBox();
+            txtPremise.Name = "premise";
+            txtPremise.Size = new System.Drawing.Size(80, 25);
+            txtPremise.Tag = "P";
+            TTNode premise = new TTNode(txtPremise);
+            if (!clicked)
+            {
+                parent = premise;
+                parent.x = 370;
+                parent.y = 10;
+                clicked = true;
+                txtPremise.Location = new System.Drawing.Point(parent.x, parent.y);
+            }
+            else if (focusedTextbox != null)
+            {
+                TTNode p = parent.find(focusedTextbox);
+                premise.parent = p;
+                p.addChild(premise);
+                parent.reposition();
+                txtPremise.Location = new System.Drawing.Point(premise.x, premise.y);
+            }
+            panel1.Controls.Add(txtPremise);
+
+            //create corresponding checkbox
+            CheckBox chkPremise = new CheckBox();
+            chkPremise.Location = new System.Drawing.Point(premise.x + 87, premise.y + 3);
+            chkPremise.Tag = premise;
+            chkPremise.Size = new System.Drawing.Size(15, 15);
+            panel1.Controls.Add(chkPremise);
+            premise.cb = chkPremise;
+            checkboxes.Add(chkPremise);
+            focusedTextbox = txtPremise;
+        }
+
         private void levelButton_Click(object sender, EventArgs e)
         {
-            if (clicked && focusedTextbox == null)
-                return;
             TextBox txtDown = new TextBox();
             txtDown.Name = "txtDown";
             txtDown.Size = new System.Drawing.Size(80, 25);
@@ -62,9 +96,9 @@ namespace TruthTreesGUI
             TTNode down = new TTNode(txtDown);
             if (!clicked)
             {
-                down.x = 260;
-                down.y = 50;
                 parent = down;
+                down.x = 370;
+                down.y = 10;
                 clicked = true;
                 txtDown.Location = new System.Drawing.Point(parent.x, parent.y);
             }
@@ -87,7 +121,7 @@ namespace TruthTreesGUI
             chkDown.Tag = down;
             chkDown.Size = new System.Drawing.Size(15, 15);
             // panel1.Controls.Add(chkDown);
-            panel1.Controls.Add(txtDown);
+            panel1.Controls.Add(chkDown);
             down.cb = chkDown;
             checkboxes.Add(chkDown);
             focusedTextbox = txtDown;
@@ -332,7 +366,7 @@ namespace TruthTreesGUI
                         if (ghettoCount == 1)
                         {
                             string type = t.tb.Tag.ToString();
-                            if (type == "C")
+                            if (type == "C" || type == "P" )
                                 ruleType = "D";
                             else
                                 ruleType = "B";
@@ -432,28 +466,15 @@ namespace TruthTreesGUI
 
         private void clearAll_Click(object sender, EventArgs e)
         {
-            if (parent != null)
-            {
-                parent.delete();
-                parent = null;
-            }
-            checkboxes.Clear();
-            foreach (LineShape line in this.panel1.Controls.OfType<LineShape>())
-            {
-                line.Parent.Dispose();
-                line.Dispose();
-            }
+            panel1.Controls.Clear();
             clicked = false;
-            foreach (Label lbl in this.panel1.Controls.OfType<Label>())
-            {
-                lbl.Dispose();
-            }
+            parent = null;
         }
 
         private void deleteNode_Click(object sender, EventArgs e)
         {
             TTNode current = parent.find(focusedTextbox);
-            
+            /*
             if (current != null)
             {
                 TTNode p = current.parent;
@@ -465,18 +486,16 @@ namespace TruthTreesGUI
                     p.drawLines();
                     drawLines(p);
                 }
-            }
-            foreach (LineShape line in this.panel1.Controls.OfType<LineShape>())
+            }*/
+            foreach (LineShape line in panel1.Controls.OfType<LineShape>())
             {
-                line.Parent.Dispose();
                 line.Dispose();
             }
-            foreach (ShapeContainer shp in this.panel1.Controls.OfType<ShapeContainer>())
-            {
-                shp.Dispose();
-            }
+            parent.drawLines();
+            drawLines(parent);
+            if (current != null)
+                current.delete();
             checkboxes.Clear();
-
             foreach (CheckBox chk in this.panel1.Controls.OfType<CheckBox>())
             {
                 checkboxes.Add(chk);

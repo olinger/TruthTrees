@@ -108,7 +108,7 @@ namespace TruthTreesGUI
                     if (tag == "L")
                         child.x -= 120;
                 }
-                if (parentTag == "C")
+                if (parentTag == "C" || parentTag=="P")
                 {
                     if (tag == "L")
                         child.x -= 70;
@@ -116,7 +116,7 @@ namespace TruthTreesGUI
                         child.x += 70;
                 }
                 child.y = y + 55;
-                if (tag == "C")
+                if (tag == "C" || tag=="P")
                 {
                     child.y = y + 25;
                 }
@@ -172,6 +172,11 @@ namespace TruthTreesGUI
                     child.findByText(target);
             }
             return null;
+        }
+
+        void toTextFile()
+        {
+
         }
     }
 
