@@ -526,7 +526,7 @@ namespace TruthTreesGUI
                 clearAll_Click(sender, e);
                 return;
             }
-            foreach (LineShape line in panel1.Controls.OfType<LineShape>())
+            /*foreach (LineShape line in panel1.Controls.OfType<LineShape>())
             {
                 line.Dispose();
             }
@@ -544,7 +544,7 @@ namespace TruthTreesGUI
             foreach (CheckBox chk in this.panel1.Controls.OfType<CheckBox>())
             {
                 checkboxes.Add(chk);
-            }
+            }*/
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
@@ -559,14 +559,14 @@ namespace TruthTreesGUI
 
         private void verifyTreeButton_Click(object sender, EventArgs e)
         {
-            if (parent != null)
+            /*if (parent != null)
             {
                 string now = DateTime.Now.ToString("M-d-yy_H-mm");
                 string fileName = "tree_" + now + ".txt";
                 List<string> lines = new List<string>();
                 lines = parent.getLines(0, lines);
                 System.IO.File.WriteAllLines(@fileName, lines);
-            }
+            }*/
         }
 
         private void premiseButton_MouseHover(object sender, EventArgs e)
