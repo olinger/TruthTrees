@@ -4,30 +4,27 @@ TruthTrees
 GUI for truth tree creation and verification
 
 Requirements:
-Python 2.7
-Sympy
-.NET Framework 4.0
-
-Instructions:
-Run TruthTreesGUI.exe
+- Python 2.7
+- Sympy
+- .NET Framework 4.0
 
 Keyboard Shortcuts:
 
-Premise 	- Ctrl-P
-Level 		- Ctrl-A
-Branch		- Ctrl-B
-Verify		- Ctrl-V
-Closed		- Ctrl-X
-Open 		- Ctrl-O
-Delete 	    - Ctrl-D
-Clear All   - Ctrl-Shift-D
-
-
-And 		   - &
-Or 			   - |
-Not			   - ~
-Conditional    - $
-Biconditional  - %
+|   Button   |  Shortcut  |
+|------------|------------|
+|Premise     |Ctrl-P      |
+|Level 		   |Ctrl-A      |
+|Branch		   |Ctrl-B      |
+|Verify		   |Ctrl-V      |
+|Closed   	 |Ctrl-X      |
+|Open 		   | Ctrl-O     |
+|Delete 	   |Ctrl-D      |
+|Clear All   |Ctrl-Shift-D|
+|And 		     |   &        |
+|Or 			   | &#124;     |
+|Not			   |  ~         |
+|Conditional |   $        |
+Biconditional|   %        |
 
 
 
