@@ -18,14 +18,13 @@ Level 		- Ctrl-A
 Branch		- Ctrl-B
 Verify		- Ctrl-V
 Closed		- Ctrl-X
-Open 		- Ctrl-O
-Delete 	    - Ctrl-D
-Clear All   - Ctrl-Shift-D
+Open 		  - Ctrl-O
+Delete 	  - Ctrl-D
+Clear All - Ctrl-Shift-D
 
-
-And 		   - &
-Or 			   - |
-Not			   - ~
+And 		       - &
+Or 			       - |
+Not			       - ~
 Conditional    - $
 Biconditional  - %
 
