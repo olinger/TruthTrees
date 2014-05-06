@@ -35,7 +35,7 @@ namespace TruthTreesGUI
             y = _tb.Location.Y;
             linesToChildren = new List<LineShape>();
             if (_parent == null)
-                level = 0;
+                level = 1;
             else
                 level += parent.level + 1;
             siblingDeleted = false;
@@ -196,6 +196,7 @@ namespace TruthTreesGUI
                         line += c.level+1 + " ";
                     }
                 }
+                Console.WriteLine(line);
                 lines.Add(line);
                 lines.AddRange(child.getLines(i, lines));
             }

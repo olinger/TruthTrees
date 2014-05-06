@@ -73,6 +73,7 @@ namespace TruthTreesGUI
                 parent.reposition();
                 txtPremise.Location = new System.Drawing.Point(premise.x, premise.y);
                 parent.lineRef = 0;
+                parent.level = 1;
             }
             panel1.Controls.Add(txtPremise);
 
@@ -86,6 +87,8 @@ namespace TruthTreesGUI
             checkboxes.Add(chkPremise);
             focusedTextbox = txtPremise;
             premise.state = "Premise";
+            if (premise.parent != null)
+                premise.level = premise.parent.level + 1;
         }
 
         private void levelButton_Click(object sender, EventArgs e)
@@ -104,6 +107,7 @@ namespace TruthTreesGUI
                 down.y = 10;
                 clicked = true;
                 txtDown.Location = new System.Drawing.Point(parent.x, parent.y);
+                parent.level = 1;
             }
             else if (focusedTextbox != null)
             {
@@ -129,6 +133,9 @@ namespace TruthTreesGUI
             checkboxes.Add(chkDown);
             focusedTextbox = txtDown;
             down.state = "Decomp";
+            if(down.parent!=null)
+                down.level = down.parent.level + 1;
+
         }
 
         private void branchButton_Click(object sender, EventArgs e)
@@ -188,6 +195,8 @@ namespace TruthTreesGUI
             focusedTextbox = txtRight;
             right.state = "Branch";
             left.state = "Branch";
+            right.level = right.parent.level + 1;
+            left.level = left.parent.level + 1;
         }
 
 
@@ -517,22 +526,15 @@ namespace TruthTreesGUI
                 clearAll_Click(sender, e);
                 return;
             }
-            /*
-            if (current != null)
-            {
-                TTNode p = current.parent;
-                current.delete();
-                if (p != null)
-                {
-                    p.linesToChildren.Clear();
-                    p.children.Clear();
-                    p.drawLines();
-                    drawLines(p);
-                }
-            }*/
             foreach (LineShape line in panel1.Controls.OfType<LineShape>())
             {
                 line.Dispose();
+            }
+
+            foreach (ShapeCollection shp in panel1.Controls.OfType<ShapeCollection>())
+            {
+                shp.Clear();
+                shp.Dispose();
             }
             parent.drawLines();
             drawLines(parent);
@@ -565,6 +567,11 @@ namespace TruthTreesGUI
                 lines = parent.getLines(0, lines);
                 System.IO.File.WriteAllLines(@fileName, lines);
             }
+        }
+
+        private void premiseButton_MouseHover(object sender, EventArgs e)
+        {
+            
         }
 
     }

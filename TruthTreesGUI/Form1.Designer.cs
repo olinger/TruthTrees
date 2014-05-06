@@ -247,6 +247,7 @@
             this.premiseButton.Text = "Premise";
             this.premiseButton.UseVisualStyleBackColor = true;
             this.premiseButton.Click += new System.EventHandler(this.premiseButton_Click);
+            this.premiseButton.MouseHover += new System.EventHandler(this.premiseButton_MouseHover);
             // 
             // verifyTreeButton
             // 
