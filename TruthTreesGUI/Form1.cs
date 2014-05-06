@@ -11,7 +11,6 @@ using Microsoft.VisualBasic.PowerPacks;
 using System.Diagnostics; // Process
 using System.IO; // StreamWriter
 
-
 namespace TruthTreesGUI
 {
     public partial class Form1 : Form
@@ -54,6 +53,8 @@ namespace TruthTreesGUI
             TextBox txtPremise = new TextBox();
             txtPremise.Name = "premise";
             txtPremise.Size = new System.Drawing.Size(80, 25);
+            txtPremise.GotFocus += textBox_Enter;
+            txtPremise.KeyPress += textBox_KeyPress;
             txtPremise.Tag = "P";
             TTNode premise = new TTNode(txtPremise);
             if (!clicked)
@@ -71,6 +72,7 @@ namespace TruthTreesGUI
                 p.addChild(premise);
                 parent.reposition();
                 txtPremise.Location = new System.Drawing.Point(premise.x, premise.y);
+                parent.lineRef = 0;
             }
             panel1.Controls.Add(txtPremise);
 
@@ -83,6 +85,7 @@ namespace TruthTreesGUI
             premise.cb = chkPremise;
             checkboxes.Add(chkPremise);
             focusedTextbox = txtPremise;
+            premise.state = "Premise";
         }
 
         private void levelButton_Click(object sender, EventArgs e)
@@ -125,6 +128,7 @@ namespace TruthTreesGUI
             down.cb = chkDown;
             checkboxes.Add(chkDown);
             focusedTextbox = txtDown;
+            down.state = "Decomp";
         }
 
         private void branchButton_Click(object sender, EventArgs e)
@@ -182,6 +186,8 @@ namespace TruthTreesGUI
             checkboxes.Add(chkRight);
             checkboxes.Add(chkLeft);
             focusedTextbox = txtRight;
+            right.state = "Branch";
+            left.state = "Branch";
         }
 
 
@@ -278,6 +284,12 @@ namespace TruthTreesGUI
                 specialKeyPressed = true;
                 levelButton_Click(sender, e);
             }
+            if (e.KeyCode == Keys.P && e.Control)
+            {
+                specialKeyPressed = true;
+                premiseButton_Click(sender, e);
+            }
+
             if (e.KeyCode == Keys.X && e.Control)
             {
                 specialKeyPressed = true;
@@ -349,6 +361,19 @@ namespace TruthTreesGUI
             return s;
         }
 
+        private List<string> rearrange(List<string> list)
+        {
+            string left1 = list[2];
+            string left2 = list[3];
+            string right1 = list[1];
+            string right2 = list[4];
+            list[1] = left1;
+            list[2] = left2;
+            list[3] = right1;
+            list[4] = right2;
+            return list;
+        }
+
         private void verifyButton_Click(object sender, EventArgs e)
         {
             List<string> toVerify = new List<string>();
@@ -375,6 +400,11 @@ namespace TruthTreesGUI
                     }
                     checkedboxes.Add(chk);
                 }
+            }
+            if (checkedboxes.Count == 5)
+            {
+                ruleType = "BI";
+                toVerify=rearrange(toVerify);
             }
             toVerify.Add(ruleType);
             for(int i=0;i<toVerify.Count;i++)
@@ -413,7 +443,6 @@ namespace TruthTreesGUI
             {
                 chk.Checked = false;
             }
-           
         }
 
         private void closedButton_Click(object sender, EventArgs e)
@@ -421,11 +450,14 @@ namespace TruthTreesGUI
             checkOffCount++;
             Label closedBranch = new Label();
             closedBranch.Text = "X"+checkOffCount;
-            closedBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 15, focusedTextbox.Location.Y + 25);
+            closedBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 30, focusedTextbox.Location.Y + 25);
             closedBranch.ForeColor = Color.Red;
             Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
             closedBranch.Font = font;
             panel1.Controls.Add(closedBranch);
+            TTNode current = parent.find(focusedTextbox);
+            current.state = "Closed";
+            closedBranch.Size = new System.Drawing.Size(30, 25);
         }
 
         private void openButton_Click(object sender, EventArgs e)
@@ -433,11 +465,14 @@ namespace TruthTreesGUI
             checkOffCount++;
             Label openBranch = new Label();
             openBranch.Text = "O" + checkOffCount;
-            openBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 15, focusedTextbox.Location.Y + 25);
+            openBranch.Location = new System.Drawing.Point(focusedTextbox.Location.X + 30, focusedTextbox.Location.Y + 25);
             openBranch.ForeColor = Color.Orange;
             Font font = new Font("Calibri", 10.0f, FontStyle.Bold);
             openBranch.Font = font;
             panel1.Controls.Add(openBranch);
+            TTNode current = parent.find(focusedTextbox);
+            current.state = "Open";
+            openBranch.Size = new System.Drawing.Size(30, 25);
         }
 
         private void clearSelect_Click(object sender, EventArgs e)
@@ -469,11 +504,19 @@ namespace TruthTreesGUI
             panel1.Controls.Clear();
             clicked = false;
             parent = null;
+            checkOffCount = 0;
         }
 
         private void deleteNode_Click(object sender, EventArgs e)
         {
+            if (parent == null)
+                return;
             TTNode current = parent.find(focusedTextbox);
+            if (current == parent)
+            {
+                clearAll_Click(sender, e);
+                return;
+            }
             /*
             if (current != null)
             {
@@ -510,6 +553,18 @@ namespace TruthTreesGUI
         private void toolStripDropDownButton1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void verifyTreeButton_Click(object sender, EventArgs e)
+        {
+            if (parent != null)
+            {
+                string now = DateTime.Now.ToString("M-d-yy_H-mm");
+                string fileName = "tree_" + now + ".txt";
+                List<string> lines = new List<string>();
+                lines = parent.getLines(0, lines);
+                System.IO.File.WriteAllLines(@fileName, lines);
+            }
         }
 
     }

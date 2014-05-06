@@ -16,7 +16,21 @@ if __name__ == "__main__":
         children = sys.argv[2:-1]
         print("Parent: ", parent)
         print("Childran: ", children)
-        if not (checkBranch(parent, children)):
+        if not checkBranch(parent, children):
+            print(False)
+            sys.exit(1)
+        print(True)
+    elif rule == "BI":
+        parent = sys.argv[1]
+        parent = parent.split('%')
+        parent = ' ( (' + createLogicStatement(parent[0]) + ') >> (' + createLogicStatement(parent[1]) + ') ) & ( (' + createLogicStatement(parent[0]) + ') << (' + createLogicStatement(parent[1]) + ') ) '
+        children = sys.argv[2:-1]
+        left = createLogicStatement(createConjunction(children[:2]))
+        right = createLogicStatement(createConjunction(children[2:]))
+        children = [left, right]
+        print(parent)
+        print(children)
+        if not checkBranch(parent, children):
             print(False)
             sys.exit(1)
         print(True)
@@ -26,14 +40,15 @@ if __name__ == "__main__":
         if not checkContradiction(parent, children):
             print(False)
             sys.exit(1)    
-        print(True)
+        print(True) 
     elif rule == "Open":
         parent = sys.argv[1]    
         children = sys.argv[2:-1]
         if not checkOpen(children):
             print(False)
             sys.exit(1)
-        print(True)
+        print(True)  
     else:
         sys.exit(1)
+    sys.exit(0)
 

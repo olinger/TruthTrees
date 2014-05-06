@@ -49,6 +49,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.premiseButton = new System.Windows.Forms.Button();
+            this.verifyTreeButton = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,7 +157,7 @@
             // 
             // clearSelect
             // 
-            this.clearSelect.Location = new System.Drawing.Point(180, 66);
+            this.clearSelect.Location = new System.Drawing.Point(130, 66);
             this.clearSelect.Name = "clearSelect";
             this.clearSelect.Size = new System.Drawing.Size(100, 25);
             this.clearSelect.TabIndex = 11;
@@ -166,7 +167,7 @@
             // 
             // clearAll
             // 
-            this.clearAll.Location = new System.Drawing.Point(392, 66);
+            this.clearAll.Location = new System.Drawing.Point(342, 66);
             this.clearAll.Name = "clearAll";
             this.clearAll.Size = new System.Drawing.Size(100, 25);
             this.clearAll.TabIndex = 12;
@@ -176,7 +177,7 @@
             // 
             // deleteNode
             // 
-            this.deleteNode.Location = new System.Drawing.Point(286, 66);
+            this.deleteNode.Location = new System.Drawing.Point(236, 66);
             this.deleteNode.Name = "deleteNode";
             this.deleteNode.Size = new System.Drawing.Size(100, 25);
             this.deleteNode.TabIndex = 13;
@@ -233,6 +234,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(22, 104);
             this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.panel1.Size = new System.Drawing.Size(856, 593);
             this.panel1.TabIndex = 15;
             // 
@@ -246,6 +248,16 @@
             this.premiseButton.UseVisualStyleBackColor = true;
             this.premiseButton.Click += new System.EventHandler(this.premiseButton_Click);
             // 
+            // verifyTreeButton
+            // 
+            this.verifyTreeButton.Location = new System.Drawing.Point(448, 66);
+            this.verifyTreeButton.Name = "verifyTreeButton";
+            this.verifyTreeButton.Size = new System.Drawing.Size(100, 25);
+            this.verifyTreeButton.TabIndex = 17;
+            this.verifyTreeButton.Text = "Verify Tree";
+            this.verifyTreeButton.UseVisualStyleBackColor = true;
+            this.verifyTreeButton.Click += new System.EventHandler(this.verifyTreeButton_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -255,6 +267,7 @@
             this.AutoScrollMargin = new System.Drawing.Size(20, 20);
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(900, 723);
+            this.Controls.Add(this.verifyTreeButton);
             this.Controls.Add(this.premiseButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
@@ -305,6 +318,7 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button premiseButton;
+        private System.Windows.Forms.Button verifyTreeButton;
     }
 }
 

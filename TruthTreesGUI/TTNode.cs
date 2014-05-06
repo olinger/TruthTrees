@@ -23,6 +23,8 @@ namespace TruthTreesGUI
         public int level;
         public string tag;
         bool siblingDeleted;
+        public string state;
+        public int lineRef;
 
         public TTNode(TextBox _tb, TTNode _parent=null)
         {
@@ -35,8 +37,9 @@ namespace TruthTreesGUI
             if (_parent == null)
                 level = 0;
             else
-                level = parent.level + 1;
+                level += parent.level + 1;
             siblingDeleted = false;
+            lineRef = 0;
         }
 
         public void delete()
@@ -101,19 +104,19 @@ namespace TruthTreesGUI
                 if (parentTag == "R")
                 {
                     if (tag == "R")
-                        child.x += 120;
+                        child.x += 130;
                 }
                 if (parentTag == "L")
                 {
                     if (tag == "L")
-                        child.x -= 120;
+                        child.x -= 130;
                 }
                 if (parentTag == "C" || parentTag=="P")
                 {
                     if (tag == "L")
-                        child.x -= 70;
+                        child.x -= 80;
                     if (tag == "R")
-                        child.x += 70;
+                        child.x += 100;
                 }
                 child.y = y + 55;
                 if (tag == "C" || tag=="P")
@@ -174,11 +177,54 @@ namespace TruthTreesGUI
             return null;
         }
 
-        void toTextFile()
+        public List<string> getLines(int i,List<string> lines)
         {
-
+            foreach (TTNode child in children)
+            {
+                i++;
+                string line = i + "; " + this.ToString() + "; ";
+                string lvlString;
+                if (level == 0)
+                    lvlString = "None";
+                else
+                    lvlString = level.ToString();
+                if (state != "Open" && state != "Closed")
+                {
+                    line += state + "; " + lvlString + "; ";
+                    foreach (TTNode c in children)
+                    {
+                        line += c.level+1 + " ";
+                    }
+                }
+                lines.Add(line);
+                lines.AddRange(child.getLines(i, lines));
+            }
+            return lines;
+        }
+        
+        public string toTextFile(TTNode p)
+        {
+            string now = DateTime.Now.ToString("M-d-yy_H-mm");
+            string fileName = "tree_" + now + ".txt";
+            List<string> lines = new List<string>();
+            System.IO.File.WriteAllLines(@fileName, lines);
+            return fileName;
         }
     }
+    /*
+1; B & (H | Z); Premise; None; 2
+2; ~z -> k; Premise; 1; 3
+3; ~K; Premise; 2; 4 5
+4; K; Branch 2; 3; 6
+5; ~~Z; Branch 2; 3; 7
+6; x; Closed 3 4; 4; None
+7; z; Decomp 5; 5; 8
+8; B; Decomp 1; 7; 9
+9; H | z; Decomp 1; 8; 10 11
+10; H; Branch 9; 9; 12
+11; Z; Branch 9; 9; 13
+12; o; Open; 10; None
+13; o; Open; 11; None*/
 
     public class Line
     {

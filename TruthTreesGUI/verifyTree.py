@@ -64,8 +64,8 @@ def checkDecomp(parent, children):
     statement is not correctly formated
     '''
     try:
-        parent = to_cnf(createLogicStatement(parent))
-        children = to_cnf(createLogicStatement(createConjunction(children)))
+        parent = to_cnf(createLogicStatement(parent),simplify=True)
+        children = to_cnf(createLogicStatement(createConjunction(children)),simplify=True)
         return Equivalent(parent, children) == True
     except:
         raise Exception("Could not understand statement")
@@ -78,8 +78,10 @@ def checkBranch(parent, children):
     statement is not correctly formated
     '''
     try:
-        parent = to_cnf(createLogicStatement(parent))
-        children = to_cnf(createLogicStatement(createDisjunction(children)))
+        parent = to_cnf(createLogicStatement(parent),simplify=True)
+        children = to_cnf(createLogicStatement(createDisjunction(children)), simplify=True)
+        print(parent)
+        print(children)
         return Equivalent(parent, children) == True
     except:
         raise Exception("Could not understand statement")
@@ -90,8 +92,8 @@ def checkContradiction(statements):
     Returns True if the conjuction of statements is a contradiction.
     '''
     try:
-        conjunction = to_cnf(createConjunction(statements))
-        return Equivalent(conjunction, False) == True 
+        conjunction = to_cnf(createConjunction(statements), simplify=True)
+        return Equivalent(conjunction) == False 
     except:
         raise Exception("Could not understand statement")
         return False
@@ -113,7 +115,8 @@ def validateBranch(Nodes, parent, children):
     parent_statement = Nodes[parent]["Statement"]
     children_statements = [Nodes[s]['Statement'] for s in children ]
     valid_statement = checkBranch(parent_statement, children_statements)
-    parents = [ Nodes[n]['Rule']['Variables'] for n in children ]
+    parents = [ Nodes[n]['Rule']['Variables'][0] for n in children ]
+    #print(parents)
     parents = set(parents)
     return valid_statement and len(parents)==1
 
@@ -131,7 +134,9 @@ def validateOpen(Nodes, current, statements):
     Returns True if every statement is a literal or a negation of a literal
     '''
     ans = [ is_literal(s) for s in statements ]
-    return all(ans) and (Nodes[current]['Statement'] == OPEN_SYMBOL)
+    print(ans)
+    #print(all(ans))
+    return all(ans)
 
 def validateTruthTree(Nodes, root=ROOT_NAME, statements=[]):
     '''
@@ -152,6 +157,7 @@ def validateTruthTree(Nodes, root=ROOT_NAME, statements=[]):
         new_statements = statements + list(Nodes[root]['Statement'])
         parent_rule_node = Nodes[root]['Rule']['Variables'][0]
         parent_node = Nodes[root]['Parent']
+        new_statements = [x for x in new_statements if not (Nodes[parent_rule_node]['Statement'])]
         branch_nodes = Nodes[parent_node.strip()]['Children']
         if (validateBranch(Nodes, parent_rule_node, branch_nodes) == False):
             return False
@@ -162,14 +168,16 @@ def validateTruthTree(Nodes, root=ROOT_NAME, statements=[]):
         return True
     elif rule == 'Decomp':
         parent_rule_node = Nodes[root]['Rule']['Variables'][0]
+        new_statements = [x for x in statements if not (Nodes[parent_rule_node]['Statement'])]
         decomp_rule = Nodes[root]['Rule']
         decomp_nodes = [root]
         new_statements = statements + list(Nodes[root]['Statement'])
         while (len(Nodes[root]['Children']) == 1) and \
-                                        (Nodes[root]['Rule'] == decomp_rule):
+                                        (Nodes[Nodes[root]['Children'][0]]['Rule'] == decomp_rule):
             root = Nodes[root]['Children'][0]
             decomp_nodes.append(root)
             new_statements += list(Nodes[root]['Statement'])
+        print(decomp_nodes)
         if (validateDecomp(Nodes, parent_rule_node, decomp_nodes) == False):
             return False
         for child in Nodes[root]['Children']:
